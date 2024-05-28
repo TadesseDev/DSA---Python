@@ -12,13 +12,17 @@ from stack import Stack
 def dfs(maze, start, goal):
     stack=[start]
     path=[]
-    while not len(stack):
-        x,y=stack.pop()
-        path.push((x,y))
-        if(maze[x][y]==goal):
+    while len(stack):
+        i,j=stack.pop()
+        path.append((i,j))
+        if((i,j)==goal):
             return path
-
-    return False
+        maze[i][j]='*'
+        coordinates = [(i-1, j),  (i,j+1),(i+1, j), (i, j-1)]
+        # (2,0),(2, 2),(1, 1), (3,0)
+        for coordinate in coordinates:
+            if(is_legal_pos(maze, coordinate)):
+                stack.append(coordinate)
 
 if __name__ == "__main__":
     # Test 1
