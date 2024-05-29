@@ -10,9 +10,21 @@ from queue_ll import Queue
 
 
 def bfs(maze, start, goal):
-    pass
-
-
+    my_queue= Queue()
+    my_queue.enqueue(start)
+    path={start: None}
+    maze[start[0]][start[1]]='*'
+    while my_queue.size():
+        i,j = my_queue.dequeue()
+        if((i,j)==goal):
+            return get_path(path, start, goal)
+        neighbors = [(i-1, j), (i, j-1), (i+1, j), (i, j+1)]
+        for neighbor in neighbors:
+            if(is_legal_pos(maze, neighbor)):
+                my_queue.enqueue(neighbor)
+                maze[i][j]='*'
+                path[neighbor] = (i,j)
+    return None
 if __name__ == "__main__":
     # Test 1
     maze = [[0] * 3 for row in range(3)]
